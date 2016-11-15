@@ -7,6 +7,7 @@ const gUtil = require('gulp-util');
 const typings = require('gulp-typings');
 const tslint = require('gulp-tslint');
 const run = require('gulp-run');
+const mocha = require('gulp-mocha');
 const fs = Promise.promisifyAll(require('fs-extra'));
 const path = require('path');
 const rimrafAsync = Promise.promisify(require('rimraf'));
@@ -84,6 +85,7 @@ gulp.task('download-binaries', () => tasks.filter(t => !!t.config.binaries).map(
  * Compiles all typescript files to javascript.
  */
 gulp.task('compile', ['typings', 'tslint'], () =>
+    // run tsc instead of gulp-typescript as mapping the output directory was tricky (we want .js files next to .js ones)
     run('tsc').exec()
 );
 
@@ -101,6 +103,11 @@ gulp.task('tslint', () =>
 gulp.task('typings', () =>
     gulp.src(path.join(__dirname, 'typings.json'))
         .pipe(typings())
+);
+
+gulp.task('test', ['compile', 'download-binaries'], () =>
+    gulp.src(path.join(__dirname, 'Tasks', '**', 'test-*.js'), {read: false})
+        .pipe(mocha({reporter: 'spec'}))
 );
 
 /**

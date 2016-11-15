@@ -13,8 +13,7 @@
             "outFiles": [],
             "sourceMaps": true,
             "args": [
-              //"download-binaries"
-              "clean"
+              "test"
             ]
         },
         {

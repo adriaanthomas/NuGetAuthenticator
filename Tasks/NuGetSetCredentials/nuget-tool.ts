@@ -6,9 +6,9 @@ import { platform } from "os";
 const config = require("./config.json");
 
 function getNuGetPath(version: string): string {
-    assert(config.binaries.keys().contains(version), `Version ${version} is not defined in config`);
+    assert(config.binaries.hasOwnProperty(version), `Version ${version} is not defined in config`);
 
-    return path.join(config.paths.binaries, version, "nuget.exe");
+    return path.join(__dirname, config.paths.binaries, "NuGet", version, "nuget.exe");
 }
 
 export class NuGetTool {
@@ -30,11 +30,13 @@ export class NuGetTool {
 
     async setCredentials(feedName: string, userName: string, password: string, configFile: string): Promise<void> {
         await this.run([
-            "sources", "update",
+            "sources", "Update",
             "-Name", feedName,
             "-UserName", userName,
             "-Password", password,
-            "-ConfigFile", configFile
+            "-ConfigFile", configFile,
+            "-NonInteractive",
+            "-Verbosity", "detailed"
         ]);
     }
 

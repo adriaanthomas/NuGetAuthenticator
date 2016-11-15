@@ -1,2 +1,5 @@
 # ignore binaries we have downloaded
 lib/
+
+# used for testing
+tmp/
