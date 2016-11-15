@@ -1,0 +1,8 @@
+{
+  "binaries": {
+    "3.3.0": "https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe"
+  },
+  "paths": {
+    "binaries": "lib"
+  }
+}

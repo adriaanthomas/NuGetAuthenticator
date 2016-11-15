@@ -1,0 +1,43 @@
+{
+  "name": "nuget-set-credentials",
+  "friendlyName": "NuGet Set Credentials",
+  "description": "Sets credentials for a NuGet feed (for use with an external feed)",
+  "category": "Package",
+  "author": "Adriaan Thomas",
+  "version": {
+    "Major": 0,
+    "Minor": 1,
+    "Patch": 0
+  },
+  "inputs": [{
+    "name": "nugetConfigFile",
+    "type": "filePath",
+    "label": "Path to NuGet.config",
+    "required": true,
+    "helpMarkdown": "Equivalent to the `-ConfigFile` `NuGet.exe` command line argument",
+    "defaultValue": "NuGet.config"
+  }, {
+    "name": "feedName",
+    "type": "string",
+    "label": "NuGet feed name",
+    "required": true,
+    "helpMarkdown": "The name of the NuGet feed to set credentials for. This should appear in `NuGet.config` in `/configuration/packageSources/add/@key`."
+  }, {
+    "name": "userName",
+    "type": "string",
+    "label": "Feed user name",
+    "required": true,
+    "helpMarkdown": "The user name to use to authenticate on the feed"
+  }, {
+    "name": "password",
+    "type": "string",
+    "label": "Feed password",
+    "required": true,
+    "helpMarkdown": "The password to authenticate on the feed (this should be a reference to a [secret variable](https://www.visualstudio.com/en-us/docs/build/define/variables#secret-variables), eg `$(MyPassword)`)"
+  }],
+  "execution": {
+    "Node": {
+      "target": "index.js"
+    }
+  }
+}

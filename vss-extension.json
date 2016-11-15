@@ -1,0 +1,38 @@
+{
+  "manifestVersion": 1,
+  "id": "nuget-authenticator",
+  "name": "NuGet Authenticator",
+  "version": "0.1.0",
+  "publisher": "athomas",
+  "public": false,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "description": "Provides an easy way to authenticate to an external NuGet feed.",
+  "categories": [
+    "Build and release"
+  ],
+  "icons": {
+    "default": "key-128.png"
+  },
+  "tags": ["NuGet", "credentials", "authenticate"],
+  "files": [
+    {
+      "path": "Tasks/NuGetSetCredentials"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "nuget-set-credentials",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "Tasks/NuGetSetCredentials"
+      }
+    }
+  ]
+}

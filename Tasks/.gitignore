@@ -1,0 +1,2 @@
+# from here on all .js files are the result of typescript compilation, so ignore those
+*.js
