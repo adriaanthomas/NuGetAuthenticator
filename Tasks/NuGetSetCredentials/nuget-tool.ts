@@ -5,18 +5,23 @@ import { platform } from "os";
 
 const config = require("./config.json");
 
-function getNuGetPath(version: string): string {
-    assert(config.binaries.hasOwnProperty(version), `Version ${version} is not defined in config`);
+// For now, can become parameter later.
+// Note that version 3.3.0 seriously messes up the config file,
+// so we will just stick to a version that we know works.
+const NuGetVersion = "3.4.4";
 
-    return path.join(__dirname, config.paths.binaries, "NuGet", version, "nuget.exe");
+function getNuGetPath(): string {
+    assert(config.binaries.hasOwnProperty(NuGetVersion), `Version ${NuGetVersion} is not defined in config`);
+
+    return path.join(__dirname, config.paths.binaries, "NuGet", NuGetVersion, "nuget.exe");
 }
 
 export class NuGetTool {
     private readonly path: string;
     private readonly defaultArgs: string[];
 
-    constructor(version: string) {
-        const nuGetPath = getNuGetPath(version);
+    constructor() {
+        const nuGetPath = getNuGetPath();
 
         if (!/^win/.test(platform())) {
             // not on Windows; run nuget on mono - fail if mono is not in the system path

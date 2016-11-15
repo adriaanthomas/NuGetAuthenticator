@@ -15,7 +15,6 @@ const fs = BBPromise.promisifyAll(require("fs-extra")) as {
     ensureDirAsync(dir: string): BBPromise<void>;
 };
 
-const NuGetVersion = "3.4.4";
 const WorkingDir = joinPaths(__dirname, "tmp");
 const Inputs: InputValues = {
     nugetConfigFile: joinPaths(WorkingDir, "NuGet.config"),
@@ -24,14 +23,14 @@ const Inputs: InputValues = {
     password: "myP4assw0rd!"
 };
 
-beforeEach(async () => {
+beforeEach(async function() {
     await fs.ensureDirAsync(WorkingDir);
     await createNuGetConfig(Inputs.nugetConfigFile);
 });
 
 describe("NuGetTool", () => {
-    it("should set credentials in a NuGet.config file", async () => {
-        const nuget = new NuGetTool(NuGetVersion);
+    it("should set credentials in a NuGet.config file", async function() {
+        const nuget = new NuGetTool();
         await nuget.setCredentials(Inputs.feedName, Inputs.userName, Inputs.password, Inputs.nugetConfigFile);
     });
 });
@@ -53,5 +52,4 @@ async function createNuGetConfig(path: string) {
     });
 
     await fs.writeFileAsync(path, xml, {mode: 0o644});
-    console.log(`Created ${path}`);
 }
