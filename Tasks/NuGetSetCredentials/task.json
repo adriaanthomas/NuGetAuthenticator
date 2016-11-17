@@ -1,4 +1,5 @@
 {
+  "id": "5860A5F3-E52F-4A10-9966-F700C9ED28A2",
   "name": "nuget-set-credentials",
   "friendlyName": "NuGet Set Credentials",
   "description": "Sets credentials for a NuGet feed (for use with an external feed)",
