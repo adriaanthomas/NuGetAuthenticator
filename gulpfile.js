@@ -113,6 +113,8 @@ gulp.task('clean', () => Promise.all([
     rimrafAsync(path.join(__dirname, 'Tasks', '**', '*.js?(.map)')),
     // remove the extension package
     rimrafAsync(path.join(__dirname, '*.vsix')),
+    // remove any temporary directories
+    rimrafAsync(path.join(__dirname, '**', 'tmp')),
     // remove a task's binaries, if it has those
     tasks.filter(task => !!task.config.paths.binaries).map(task =>
         rimrafAsync(path.join(task.taskDir, task.config.paths.binaries))
