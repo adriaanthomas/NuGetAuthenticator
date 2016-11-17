@@ -1,0 +1,15 @@
+{
+  "name": "nuget-set-credentials",
+  "version": "0.1.0",
+  "description": "Sets credentials for a NuGet feed (for use with an external feed)",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/adriaanthomas/NuGetAuthenticator.git",
+    "type": "git"
+  },
+  "author": "Adriaan Thomas",
+  "license": "MIT",
+  "dependencies": {
+    "vsts-task-lib": "^1.1.0"
+  }
+}

@@ -6,11 +6,11 @@ const gulp = require('gulp');
 const gUtil = require('gulp-util');
 const typings = require('gulp-typings');
 const tslint = require('gulp-tslint');
-const run = require('gulp-run');
 const mocha = require('gulp-mocha');
 const fs = Promise.promisifyAll(require('fs-extra'));
 const path = require('path');
 const rimrafAsync = Promise.promisify(require('rimraf'));
+const spawn = require('child_process').spawn;
 const createExtension = require('tfx-cli/_build/exec/extension/create').createExtension;
 
 const tasksDir = path.join(__dirname, 'Tasks');
@@ -76,16 +76,22 @@ gulp.task('download-binaries', () => tasks.filter(t => !!t.config.binaries).map(
     return Promise.all(downloads);
 }));
 
+gulp.task('install', () =>
+    tasks
+        .filter(t => fileExists(path.join(t.taskDir, 'package.json')))
+        .map(t => spawnAsync('yarn', [], {cwd: t.taskDir}))
+);
+
 /**
  * Compiles all typescript files to javascript.
  */
-gulp.task('compile', ['typings', 'tslint'], () =>
+gulp.task('compile', ['typings', 'tslint', 'install'], () =>
     // run tsc instead of gulp-typescript as mapping the output directory was tricky (we want .js files next to .js ones)
-    run('tsc').exec()
+    spawnAsync(path.join(__dirname, 'node_modules', '.bin', 'tsc'), [], {shell: true})
 );
 
 gulp.task('tslint', () =>
-    gulp.src(path.join(__dirname, 'Tasks', '**', '*.ts'))
+    gulp.src(path.join(__dirname, 'Tasks', '!(node_modules)**', '*.ts'))
         .pipe(tslint({
             formatter: 'verbose'
         }))
@@ -115,6 +121,8 @@ gulp.task('clean', () => Promise.all([
     rimrafAsync(path.join(__dirname, '*.vsix')),
     // remove any temporary directories
     rimrafAsync(path.join(__dirname, '**', 'tmp')),
+    // remove javascript dependencies of tasks
+    rimrafAsync(path.join(__dirname, 'Tasks', '**', 'node_modules')),
     // remove a task's binaries, if it has those
     tasks.filter(task => !!task.config.paths.binaries).map(task =>
         rimrafAsync(path.join(task.taskDir, task.config.paths.binaries))
@@ -150,6 +158,19 @@ function fileExists(path) {
     return fs.statAsync(path)
         .then(() => true)
         .catch(() => false);
+}
+
+/**
+ * Spawns a command.
+ *
+ * @param {string} command the file to execute
+ * @param {string[]} args anyarguments to pass
+ * @param {any} options options to pass to `child_process.spawn`
+ * @returns {Promise}
+ */
+function spawnAsync(command, args, options) {
+    options.stdio = 'inherit';
+    return streamToPromise(spawn(command, args, options));
 }
 
 function streamToPromise(stream) {
