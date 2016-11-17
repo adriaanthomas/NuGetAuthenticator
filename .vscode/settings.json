@@ -1,6 +1,11 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "tslint.enable": true,
-"typescript.check.workspaceVersion": true,
-"typescript.tsdk": "./node_modules/typescript/lib"
+
+  "typescript.check.workspaceVersion": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+
+  "files.exclude": {
+    "**/*.map": true // exclude source maps
+  }
 }
