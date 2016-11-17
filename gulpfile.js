@@ -35,23 +35,18 @@ gulp.task('info', () =>
     tasks.map(task => gUtil.log(`Task: ${gUtil.colors.cyan(path.basename(task.taskDir))}`))
 );
 
+/**
+ * Creates a new extension.
+ */
 gulp.task('package', ['download-binaries', 'compile', 'test'], () =>
-    createExtension(
-        // mergeSettings
-        {
-            root: __dirname,
-            manifests: [path.join(__dirname, 'vss-extension.json')],
-            manifestGlobs: [],
-            bypassValidation: false,
-            revVersion: false,
-            locRoot: __dirname
-        },
-        // packageSettings
-        {
-            outputPath: __dirname,
-            locRoot: __dirname
-        }
-    )
+    createPackage(false)
+);
+
+/**
+ * Creates an update for the extension (bumps the revision number).
+ */
+gulp.task('package-rev', ['download-binaries', 'compile', 'test'], () =>
+    createPackage(true)
 );
 
 /**
@@ -123,6 +118,25 @@ gulp.task('clean', () => Promise.all([
         rimrafAsync(path.join(task.taskDir, task.config.paths.binaries))
     )
 ]));
+
+function createPackage(revVersion) {
+    return createExtension(
+        // mergeSettings
+        {
+            root: __dirname,
+            manifests: [path.join(__dirname, 'vss-extension.json')],
+            manifestGlobs: [],
+            bypassValidation: false,
+            revVersion,
+            locRoot: __dirname
+        },
+        // packageSettings
+        {
+            outputPath: __dirname,
+            locRoot: __dirname
+        }
+    )
+}
 
 /**
  * Checks if a file exists.
