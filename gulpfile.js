@@ -29,13 +29,13 @@ const tasks = fs.readdirAsync(tasksDir)
         };
     });
 
-gulp.task('default', ['download-binaries', 'compile']);
+gulp.task('default', ['test']);
 
 gulp.task('info', () =>
     tasks.map(task => gUtil.log(`Task: ${gUtil.colors.cyan(path.basename(task.taskDir))}`))
 );
 
-gulp.task('package', ['download-binaries', 'compile'], () =>
+gulp.task('package', ['download-binaries', 'compile', 'test'], () =>
     createExtension(
         // mergeSettings
         {
