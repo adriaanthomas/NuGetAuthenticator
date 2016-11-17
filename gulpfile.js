@@ -142,7 +142,7 @@ function createPackage(revVersion) {
  * Checks if a file exists.
  *
  * @param {string} path the path of the file
- * @returns Promise<boolean> resolved with `true` if the file exists, or `false` if not
+ * @returns {Promise<boolean>} resolved with `true` if the file exists, or `false` if not
  */
 function fileExists(path) {
     return fs.statAsync(path)
