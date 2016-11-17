@@ -166,7 +166,7 @@ function fileExists(path) {
  * @param {string} command the file to execute
  * @param {string[]} args anyarguments to pass
  * @param {any} options options to pass to `child_process.spawn`
- * @returns {Promise}
+ * @returns {Promise} a promise that will be resolved or rejected when the process has ended
  */
 function spawnAsync(command, args, options) {
     options.stdio = 'inherit';
