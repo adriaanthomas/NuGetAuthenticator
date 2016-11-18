@@ -4,6 +4,10 @@
   "description": "VSTS build extension to authenticate external NuGet feeds",
   "author": "Adriaan Thomas <adriaan.thomas@outlook.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adriaanthomas/NuGetAuthenticator"
+  },
   "devDependencies": {
     "bluebird": "^3.4.6",
     "fs-extra": "^1.0.0",
@@ -21,9 +25,6 @@
     "typescript": "^2.0.9",
     "typings": "^2.0.0",
     "xml2js": "^0.4.17"
-  },
-  "scripts": {
-    "package": "gulp package"
   },
   "dependencies": {}
 }
