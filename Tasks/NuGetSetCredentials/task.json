@@ -4,6 +4,7 @@
   "friendlyName": "NuGet Set Credentials",
   "description": "Sets credentials for a NuGet feed (for use with an external feed)",
   "category": "Package",
+  "instanceNameFormat": "Set credentials for $(feedName)",
   "author": "Adriaan Thomas",
   "version": {
     "Major": 0,
