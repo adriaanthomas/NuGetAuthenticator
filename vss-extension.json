@@ -18,6 +18,9 @@
     "default": "key-128.png"
   },
   "tags": ["NuGet", "credentials", "authenticate"],
+  "screenshots": [{
+    "path": "screenshots/NuGetSetCredentials.png"
+  }],
   "content": {
     "details": {
       "path": "overview.md"
