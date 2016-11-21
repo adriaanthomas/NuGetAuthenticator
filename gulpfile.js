@@ -15,17 +15,17 @@ const createExtension = require('tfx-cli/_build/exec/extension/create').createEx
 
 const tasksDir = path.join(__dirname, 'Tasks');
 
-// Promise<[{taskDir, config}]>
+// Promise<[{taskDir, taskDistDir, config}]>
 const tasks = fs.readdirAsync(tasksDir)
+    .map(f => path.join(tasksDir, f))
     .map(f => {
-        const taskDirEntry = path.join(tasksDir, f);
-        return fs.statAsync(taskDirEntry).then(s => s.isDirectory() ? taskDirEntry : null);
+        return fs.statAsync(f).then(s => s.isDirectory() ? f : null);
     })
     .filter(f => f !== null)
-    .map(taskDir => {
+    .map(t => {
         return {
-            taskDir,
-            config: require(path.join(taskDir, 'config.json')),
+            taskDir: t,
+            config: require(path.join(t, 'config.json'))
         };
     });
 
