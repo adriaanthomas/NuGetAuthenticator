@@ -6,8 +6,6 @@ While Visual Studio Team Services provides [package management](https://marketpl
 
 ## Usage
 
-![screenshot](SetCredentialsTask.png)
-
 Specify the same `NuGet.config` file as for the _NuGet Installer_ task. This file will be modified in-place, so that it also contains the specified user name and password, for the given feed. The password will be encrypted by NuGet.
 
 It is **strongly** recommended to store the password in a secret variable, so that it is stored securely on Visual Studio Team Services. Only this way will the password not be logged in the task output, nor appear in the build or release history.
