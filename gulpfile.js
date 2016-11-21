@@ -14,23 +14,19 @@ const spawn = require('child_process').spawn;
 const createExtension = require('tfx-cli/_build/exec/extension/create').createExtension;
 
 const tasksDir = path.join(__dirname, 'Tasks');
-const distDir = path.join(__dirname, 'dist', 'Tasks');
 
 // Promise<[{taskDir, taskDistDir, config}]>
 const tasks = fs.readdirAsync(tasksDir)
+    .map(f => path.join(tasksDir, f))
     .map(f => {
-        return {
-            taskDir: path.join(tasksDir, f),
-            taskDistDir: path.join(distDir, f)
-        };
-    })
-    .map(f => {
-        return fs.statAsync(f.taskDir).then(s => s.isDirectory() ? f : null);
+        return fs.statAsync(f).then(s => s.isDirectory() ? f : null);
     })
     .filter(f => f !== null)
     .map(t => {
-        t.config = require(path.join(t.taskDir, 'config.json'));
-        return t;
+        return {
+            taskDir: t,
+            config: require(path.join(t, 'config.json'))
+        };
     });
 
 gulp.task('default', ['test']);
