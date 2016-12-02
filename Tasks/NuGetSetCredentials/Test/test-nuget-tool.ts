@@ -3,7 +3,7 @@ import { InputValues } from "../input-values";
 import * as BBPromise from "bluebird";
 import { join as joinPaths } from "path";
 import { Builder as XmlBuilder } from "xml2js";
-require("should");
+import * as should from "should";
 
 const fs = BBPromise.promisifyAll(require("fs-extra")) as {
     // bluebird does not offer an easy way to get these definitions, so declare them here for now...
@@ -43,7 +43,7 @@ beforeEach(async function() {
     await createNuGetConfig(Inputs.nugetConfigFile);
 });
 
-describe("NuGetTool", () => {
+describe("NuGetTool", function() {
     it("should set credentials in a NuGet.config file", async function() {
         const nuget = new NuGetTool();
         await nuget.setCredentials(Inputs.feedName, Inputs.userName, Inputs.password, Inputs.nugetConfigFile);
@@ -67,6 +67,17 @@ describe("NuGetTool", () => {
         const passwordSettings = packageSourceCredentials[0].myFeed[0].add[1]["$"];
         passwordSettings.should.have.property("value");
         passwordSettings.value.length.should.be.greaterThan(0);
+    });
+
+    it("should fail if there was a problem from nuget.exe", async function() {
+        const nuget = new NuGetTool();
+
+        try {
+            await nuget.setCredentials("NotExistingFeedName", Inputs.userName, Inputs.password, Inputs.nugetConfigFile);
+            should.fail(undefined, Error, "No exception", "instanceof");
+        } catch (e) {
+            // OK
+        }
     });
 });
 
