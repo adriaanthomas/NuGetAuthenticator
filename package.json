@@ -1,6 +1,6 @@
 {
   "name": "nuget-authenticator",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "description": "VSTS build extension to authenticate external NuGet feeds",
   "author": "Adriaan Thomas <adriaan.thomas@outlook.com>",
   "license": "MIT",

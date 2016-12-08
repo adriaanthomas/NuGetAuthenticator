@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "nuget-authenticator",
   "name": "NuGet Authenticator",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "publisher": "athomas",
   "public": false,
   "targets": [

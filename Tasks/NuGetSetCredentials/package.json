@@ -1,6 +1,6 @@
 {
   "name": "nuget-set-credentials",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Sets credentials for a NuGet feed (for use with an external feed)",
   "main": "index.js",
   "repository": {
